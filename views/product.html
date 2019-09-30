@@ -1,0 +1,16 @@
+{% extends './layouts/base.html' %}
+
+{% block content %}
+  <h1>{{ product.name }}</h1>
+  <p>Preço R$ {{ product.price }} </p>
+  <p>Descrição: {{ product.description }} </p>
+   <button id="addProduct" class="btn btn-danger">Adicionar produto</button> 
+{% endblock %}
+
+{% block title %}
+  Meu Produto {{ product.id }}
+{% endblock %}
+
+{% block script %}
+  <script src="/js/products.js" charset="utf-8"></script>
+{% endblock %}
