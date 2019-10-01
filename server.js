@@ -6,9 +6,14 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const ProductsSchema = require('./schemas/Products');
 const UsersSchema = require('./schemas/users');
+const ClientsSchema = require('./schemas/Clients');
 const Products = mongoose.model('Product', ProductsSchema);
 const Users = mongoose.model('Users', UsersSchema);
+const Clients = mongoose.model('Clients', ClientsSchema);
 const MONGODB_URL = 'mongodb://@localhost:27017/store';
+const md5 = require('md5');
+
+
 mongoose.connect(MONGODB_URL, {useNewUrlParser: true}, err => {
     if (err) {
         console.error('[SERVER_ERROR] MongoDB Connection:', err);
@@ -19,23 +24,22 @@ mongoose.connect(MONGODB_URL, {useNewUrlParser: true}, err => {
     console.log('Escutando na porta 3000');
 });
 
-});
-
+});       
+      
 nunjucks.configure('views', {
     autoescape: true,
-    express: app
-});
-
-
+    express: app  
+});   
+                
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
-
+  
 
 app.use(express.static('public'));
 app.get('/', (req, res) => {
-  res.render('index.html');
+  res.render('index.html'); 
 });
   
 app.get('/products', (req, res) => {  
@@ -54,12 +58,26 @@ app.get('/users', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('contact.html');
 });
-
+  
 
 app.get('/ricardo', (req, res) => {
   res.render('ricardo.html');
 });
 
+app.get('/register', (req, res) => {
+  res.render('register.html');
+});
+
+app.post('/client', (req, res) => {
+  var client = new Clients(req.body);
+  client.password = md5(client.password);
+  client.save((err, client) => {
+    console.info(client.name + ' salvo');
+    res.send('ok');
+  })
+
+});
+ 
 app.post('/send', (req, res) => {
   var email = 'artur.nzk@gmail.com';
   const transporter = nodemailer.createTransport({
@@ -68,7 +86,7 @@ app.post('/send', (req, res) => {
       user: 'senacerechim2019@gmail.com',
       pass: 'senacrserechim'
     }
-  });
+  }); 
   const mailOptions = {
     from: 'senacerechim2019@gmail.com',
     to: email,
@@ -96,7 +114,7 @@ app.get('/product/:id', (req, res) => {
       }
   });
 });
-  
+      
 // APIs
 app.get('/api/products', (req, res) => {
   res.send(listProducts);
@@ -109,3 +127,4 @@ app.get('/api/product/:id', (req, res) => {
   res.send(product);
 });
 
+      

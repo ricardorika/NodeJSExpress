@@ -1,0 +1,56 @@
+{% extends './layouts/base.html' %}
+
+{% block content %}
+  <h1>Registro</h1>
+  <form>
+    <div class="row">
+      <div class="col-6">
+        Name
+        <input class="form-control" name="name" id="name">
+      </div>
+      <div class="col-6">
+        Last Name
+        <input id='lastname' class="form-control" name="lastname">
+      </div>
+      <div class="col-4">
+        E-mail
+        <input id='email' class="form-control" name="email" type="email">
+      </div>
+      <div class="col-4">
+        Password
+        <input id='password' class="form-control" name="password" type="password">
+      </div>
+      <div class="col-4">
+        Confirm Password
+        <input id='confirmpassword' class="form-control" name="password" type="password">
+      </div>
+      <div class="col-6">
+        ZipCode
+        <input id="cep" class="form-control" name="cep">
+      </div>
+      <div class="col-6">
+        City
+          <input type="text" name="" value="" id="city" class="form-control">
+        </div>
+        <div class="col-6">
+         Address
+            <input type="text" name="" value="" id="address" class="form-control">
+          </div>
+           <div class="col-6">
+          Neighborhood
+            <input type="text" name="" value="" id="neighborhood" class="form-control">
+          </div>
+      <div class="col-12 mt-4">
+        <button type="submit" name="button" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block title %}
+  Registro
+{% endblock %}
+
+{% block script %}
+  <script src="/js/register.js" charset="utf-8"></script>
+{% endblock %}
