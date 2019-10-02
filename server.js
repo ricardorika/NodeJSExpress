@@ -46,7 +46,6 @@ app.get('/products', (req, res) => {
   Products.find((err, obj) => {
       res.render('products.html', {products: obj});
   });
-    
 });
 app.get('/users', (req, res) => {  
   Users.find((err, obj) => {
@@ -68,6 +67,23 @@ app.get('/register', (req, res) => {
   res.render('register.html');
 });
 
+app.get('/rproducts', (req, res) => {
+  res.render('rproducts.html');
+});
+app.get('/products', (req, res) => {  
+  Products.find((err, obj) => {
+      res.render('rproducts.html', {products: obj});
+  });
+});
+
+ app.post('/products', (req, res) => {
+  var nproduct = new Products(req.body);
+   nproduct.save((err, products) => {
+    console.info(products.name + ' salvo');
+    res.send('ok');
+  })
+});
+
 app.post('/client', (req, res) => {
   var client = new Clients(req.body);
   client.password = md5(client.password);
@@ -75,9 +91,9 @@ app.post('/client', (req, res) => {
     console.info(client.name + ' salvo');
     res.send('ok');
   })
-
 });
  
+
 app.post('/send', (req, res) => {
   var email = 'artur.nzk@gmail.com';
   const transporter = nodemailer.createTransport({
